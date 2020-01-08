@@ -46,25 +46,29 @@
 
   <!-- css -->
   <%- 
-  	css([
-        'https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css',			 			
+  	css([		
         'css/Annie.css'
   		])
   %>
   
   <!-- jquery -->
-	<%- js(['js/jquery.min.js'])%>
+	<%- js(['plugin/jquery/jquery.min.js'])%>
 
-  <!-- leancloud -->
-  <!--
-    去掉了av-core-min.js.它与av-min.js是一个作用,与leancloud建立初始化连接的,提供API接口,
-    如果出现 AV.initialize未定义,将leancloud.js中的 AV.initialize改为AV.init()
-    Valine.js其实有引用av.js的链接,此处引用,只是为了让leancloud.js使用,还未想好如何只引用一个
-  -->
-  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-
-  <%- js([
-  				'js/leancloud.js'
-  			])
-  %>
+<script>
+    const CONFIG_BGIMAGE = {
+      mode: '<%= theme.background_image.mode %>',
+      normalSrc: '<%- url_for(theme.background_image.normal_url) %>',
+      randomYouMax: <%= theme.background_image.random_you_max %>,
+      randomYouSrc: '<%- url_for(theme.background_image.random_you_url) %>',
+	  randomOtherSrc: '<%- url_for(theme.background_image.random_other_url) %>',
+	  preloaderEnable: <%= theme.preloader.enable %>
+    }
+	
+    const CONFIG_LEACLOUD_COUNT = {
+      enable: <%= theme.leancloud_count.enable %>,
+	  appId: '<%= theme.leancloud_count.appid %>',
+	  appKey: '<%= theme.leancloud_count.appkey %>',
+	  serverURLs: '<%= theme.leancloud_count.serverURLs %>' || ' '
+    }
+  </script>
 </head>
