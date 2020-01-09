@@ -332,19 +332,25 @@ const post = {
 
 let urlCheck = /((https|http|ftp|rtsp|mms):\/\/)?(([0-9a-z_!~*'().&=+$%-]+:)?[0-9a-z_!~*'().&=+$%-]+@)?(([0-9]{1,3}\.){3}[0-9]{1,3}|([0-9a-z_!~*'()-]+\.)*([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]\.[a-z]{2,6})(:[0-9]{1,4})?((\/?)|(\/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+\/?)/g;
 let	urlCheckStatus = urlCheck.test( CONFIG_LEACLOUD_COUNT.serverURLs);
-
 if(urlCheckStatus){
-	AV.init({
-		appId: CONFIG_LEACLOUD_COUNT.appId,
-		appKey: CONFIG_LEACLOUD_COUNT.appKey,
-		serverURLs: CONFIG_LEACLOUD_COUNT.serverURLs
-	});			
-} else {		
-	AV.init({
-		appId: CONFIG_LEACLOUD_COUNT.appId,
-		appKey: CONFIG_LEACLOUD_COUNT.appKey
-	});	
-	console.log("The format of <" + CONFIG_LEACLOUD_COUNT.serverURLs + "> is not correct!");
+    if (!AV.applicationId)
+    {
+        AV.init({
+            appId: CONFIG_LEACLOUD_COUNT.appId,
+            appKey: CONFIG_LEACLOUD_COUNT.appKey,
+            serverURLs: CONFIG_LEACLOUD_COUNT.serverURLs
+        });	
+    }
+			
+} else {
+    if (!AV.applicationId)
+    {
+        AV.init({
+            appId: CONFIG_LEACLOUD_COUNT.appId,
+            appKey: CONFIG_LEACLOUD_COUNT.appKey
+        });	
+        console.log("The format of <" + CONFIG_LEACLOUD_COUNT.serverURLs + "> is not correct!");
+    }			
 }
 
 let initCounter = AV.Object.extend("Counter"),
